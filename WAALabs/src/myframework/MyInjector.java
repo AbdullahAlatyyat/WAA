@@ -43,9 +43,9 @@ public class MyInjector {
         }
     }
 
-    public static <T> T getService(Class<T> classz) {
+    public static <T> T getService(Class<T> myClasses) {
         try {
-            return myInjector.getBeanInstance(classz);
+            return myInjector.getBeanInstance(myClasses);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,8 +54,8 @@ public class MyInjector {
 
     private void initFramework(Class<?> mainClass) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
         Class<?>[] classes = getClasses(mainClass.getPackage().getName(), true);
-        ComponentContainer componentConatiner = ComponentContainer.getInstance();
-        ClassHunter classHunter = componentConatiner.getClassHunter();
+        ComponentContainer componentContainer = ComponentContainer.getInstance();
+        ClassHunter classHunter = componentContainer.getClassHunter();
         String packageRelPath = mainClass.getPackage().getName().replace(".", "/");
         try (ClassHunter.SearchResult result = classHunter.findBy(SearchConfig.forResources(packageRelPath).by(ClassCriteria.create().allThoseThatMatch(cls -> {
             return cls.getAnnotation(MyBean.class) != null;
@@ -72,21 +72,19 @@ public class MyInjector {
                 }
             }
 
-            for (Class<?> classz : classes) {
-                if (classz.isAnnotationPresent(MyBean.class)) {
-                    Object classInstance = classz.newInstance();
-                    applicationScope.put(classz, classInstance);
-                    InjectionUtil.autowire(this, classz, classInstance);
+            for (Class<?> myClass : classes) {
+                if (myClass.isAnnotationPresent(MyBean.class)) {
+                    Object classInstance = myClass.newInstance();
+                    applicationScope.put(myClass, classInstance);
+                    InjectionUtil.autowire(this, myClass, classInstance);
                 }
             }
         }
-        ;
-
     }
 
     public Class<?>[] getClasses(String packageName, boolean recursive) throws ClassNotFoundException, IOException {
-        ComponentContainer componentConatiner = ComponentContainer.getInstance();
-        ClassHunter classHunter = componentConatiner.getClassHunter();
+        ComponentContainer componentContainer = ComponentContainer.getInstance();
+        ClassHunter classHunter = componentContainer.getClassHunter();
         String packageRelPath = packageName.replace(".", "/");
         SearchConfig config = SearchConfig.forResources(packageRelPath);
         if (!recursive) {
@@ -106,7 +104,7 @@ public class MyInjector {
     }
 
     public <T> Object getBeanInstance(Class<T> interfaceClass, String fieldName) throws InstantiationException, IllegalAccessException {
-        Class<?> implementationClass = getImplimentationClass(interfaceClass, fieldName);
+        Class<?> implementationClass = getImplementationClass(interfaceClass, fieldName);
 
         if (applicationScope.containsKey(implementationClass)) {
             return applicationScope.get(implementationClass);
@@ -119,7 +117,7 @@ public class MyInjector {
         }
     }
 
-    private Class<?> getImplimentationClass(Class<?> interfaceClass, final String fieldName) {
+    private Class<?> getImplementationClass(Class<?> interfaceClass, final String fieldName) {
         Set<Entry<Class<?>, Class<?>>> implementationClasses = diMap.entrySet().stream().filter(entry -> entry.getValue() == interfaceClass).collect(Collectors.toSet());
         String errorMessage = "";
         if (implementationClasses == null || implementationClasses.size() == 0) {

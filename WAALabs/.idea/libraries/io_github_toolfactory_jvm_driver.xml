@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="io.github.toolfactory.jvm.driver" type="repository">
+    <properties maven-id="io.github.toolfactory:jvm-driver:9.1.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/github/toolfactory/jvm-driver/9.1.1/jvm-driver-9.1.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/github/toolfactory/narcissus/1.0.7/narcissus-1.0.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

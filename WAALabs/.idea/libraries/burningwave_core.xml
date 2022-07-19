@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="burningwave.core" type="repository">
+    <properties maven-id="org.burningwave:core:12.57.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/burningwave/core/12.57.0/core-12.57.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/burningwave/jvm-driver/8.6.0/jvm-driver-8.6.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/github/toolfactory/jvm-driver/9.1.1/jvm-driver-9.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
